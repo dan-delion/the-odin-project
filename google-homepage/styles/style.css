@@ -1,3 +1,14 @@
+li {
+    float: left;
+    padding: 1em;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
 img {
     display: block;
     margin: 0 auto;
@@ -9,31 +20,51 @@ html, body, #viewport {
 }
 
 #viewport {
-    display: flex;
-    align-content: center;
-    justify-content: center;
+    position: relative;
 }
 
 #main {
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
     display: flex;
     flex-direction: column;
+    align-content: center;
     justify-content: center;
 }
 
 #searchbar {
     display: flex;
     justify-content: center;
-    /* position: absolute; */
-    /* top: 50%; */
-    /* bottom: 50%; */
-    /* transform: translate(-50%, -50%); */
 }
 
 #searchbuttons {
     display: flex;
     justify-content: center;
-    /* position: absolute; */
-    /* top: 50%; */
-    /* bottom: 50%; */
-    /* transform: translate(-50%, -50%); */
+}
+
+#topleft {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#topright {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#bottomleft {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+#bottomright {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
