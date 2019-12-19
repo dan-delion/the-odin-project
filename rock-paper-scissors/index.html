@@ -1,7 +1,38 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
   <body>
+
+    <div id="main">
+      <div class="scores">
+        <div class="score">
+          <span class="player">You</span>
+          <span id="player-score">0</span>
+        </div>
+        <div>
+          <span>vs.</span>
+        </div>
+        <div class="score">
+          <span class="player">Computer</span>
+          <span id="computer-score">0</span>
+        </div>
+      </div>
+      <div class="result">Pick any one below to start!</div>
+      <div class="hands">
+        <button id="rock" class="hand">Rock</button>
+        <button id="paper" class="hand">Paper</button>
+        <button id="scissors" class="hand">Scissors</button>
+      </div>
+    </div>
+
     <script>
-      const computerPlay = () => ["Rock", "Paper", "Scissors"][Math.floor(Math.random() * 3)];
+      function computerPlay() {
+          return ["rock", "paper", "scissors"][Math.floor(Math.random() * 3)];
+      }
 
       function playRound(playerSelection, computerSelection) {
           let p = playerSelection.toLowerCase();
@@ -17,23 +48,37 @@
               return "You lose!";
       }
 
-      function game() {
-          let wins = 0;
-          let loses = 0;
+      function updateScores(result) {
+          const playerScore = document.querySelector('#player-score');
+          const computerScore = document.querySelector('#computer-score');
+          const display = document.querySelector('.result');
 
-          for (i = 0; i < 5; ++i) {
-              let playerSelection = prompt("rock/paper/scissors?");
-              let computerSelection = computerPlay();
-              let result = playRound(playerSelection, computerSelection);
-              if (result === "You win!")
-                  ++wins;
-              else if (result === "You lose!")
-                  ++loses;
-              console.log(`Round ${i+1}: ${result}`);
+          display.textContent = result;
+          if (result === "You win!")
+              ++playerScore.textContent;
+          else if (result === "You lose!")
+              ++computerScore.textContent;
+
+          if (playerScore.textContent >= 5) {
+              display.textContent = "Congrats! Get yourself a cookie.";
+              playerScore.textContent = 0;
+              computerScore.textContent = 0;
+          } else if (computerScore.textContent >= 5) {
+              display.textContent = "What a loser! Now go and cry in the corner.";
+              playerScore.textContent = 0;
+              computerScore.textContent = 0;
           }
-
-          console.log(`Final score: ${wins} - ${loses}. ${wins > loses ? "Congratulations!" : "Better luck next time!"}`);
       }
+
+      window.addEventListener('click', (e) => {
+          const button = document.querySelector(`button#${e.target.id}`);
+          if (!button) return;
+
+          const playerSelection = e.target.id;
+          const computerSelection = computerPlay();
+          const result = playRound(playerSelection, computerSelection);
+          updateScores(result);
+      });
     </script>
   </body>
 </html>
