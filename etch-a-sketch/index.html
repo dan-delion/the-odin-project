@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Etch-a-Sketch</title>
+  </head>
+  <body>
+    <script>
+      const body = document.querySelector('body');
+      const main = document.createElement('div');
+      main.style.display = 'flex';
+      main.style.flexDirection = 'column';
+      main.style.width = '100vmin';
+      main.style.height = '100vmin';
+      body.appendChild(main);
+
+      const button = document.createElement('button');
+      button.style.display = 'block';
+      button.style.margin = '1em auto';
+      button.style.height = '2em';
+      button.textContent = 'Reset';
+      button.addEventListener('click', (e) => {
+          let size = prompt('How many squares per side?');
+          redisplay(size);
+      });
+      main.appendChild(button);
+
+      const grid = document.createElement('div');
+      grid.style.height = '90%';
+      main.appendChild(grid);
+      redisplay(16);
+
+      function redisplay(size) {
+          // clean up current grid
+          while (grid.firstChild) {
+              grid.removeChild(grid.firstChild);
+          }
+          // fill up grid
+          for (let i = 0; i < size; ++i) {
+              let row = document.createElement('div');
+              row.style.display = 'flex';
+              row.style.height = `calc(100% / ${size}`;
+              grid.appendChild(row);
+              for (let j = 0; j < size; ++j) {
+                  let cell = document.createElement('div');
+                  cell.style.backgroundColor = 'pink';
+                  cell.style.width = `calc(100% / ${size}`;
+                  cell.setAttribute('data-darkness', 0);
+                  cell.addEventListener('mouseenter', (e) => {
+                      let darkness = Number(cell.getAttribute('data-darkness')) + .1;
+                      darkness = Math.max(darkness, 0);
+                      cell.setAttribute('data-darkness', darkness);
+                      cell.style.backgroundColor =
+                          `rgb(${255 * (1 - darkness)},
+                               ${255 * (1 - darkness)},
+                               ${255 * (1 - darkness)})`;
+                  });
+                  row.appendChild(cell);
+              }
+          }
+      }
+
+      window.addEventListener('mouseenter', (e) => {
+          const cell = e.target;
+          console.log(cell.classList);
+      });
+    </script>
+  </body>
+</html>
